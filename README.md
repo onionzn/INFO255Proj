@@ -17,7 +17,7 @@ In `get_recs.py`, we make a GET request to the Tinder endpoint `https://api.goti
     - `job_title`: The job title of a Tinder user. 
     - `school`: The school that a Tinder user is attending or has attended.
     - `first_photo_url`: The url to the first photo on a Tinder user's profile.
-- We repeat the GET request until Tinder ran out of recommendations for the authenticated user. The extracted information was written into a `tinder_user.csv`.
+- We repeat the GET request until Tinder ran out of recommendations for the authenticated user. The extracted information was written into `tinder_user.csv`. Right now, the `.csv` file contains around 4400 entries. There may be duplicates among these entries, but they can be cleaned based on the `user_id` column.
 
 #### How to execute the Python script
 `python3 get_recs.py`
