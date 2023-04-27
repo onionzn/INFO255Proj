@@ -29,5 +29,9 @@ In `get_recs.py`, we make a GET request to the Tinder endpoint `https://api.goti
 3. Navigate to the "Network" tab.
 4. Hit "Continue", in the "Name" sidebar 'confirm/' should appear. Click on it and click on "Response" tab.
 5. Search for "access_token=" in the response.
+
 Reference: https://github.com/charliewolf/pynder/issues/171
+
+---
+## Get Yelp Reviews using Yelp Public API
 
