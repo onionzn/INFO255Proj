@@ -1,5 +1,9 @@
 # INFO255Proj
 
+## Team Members
+- Kristina Hiraishi
+- Jingshu Rui
+- Ning Zhang
 
 ## Retrieve User Information from Tinder
 In `get_recs.py`, we make a GET request to the Tinder endpoint `https://api.gotinder.com/v2/recs/core` to retrieve a list of users nearby.
