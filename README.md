@@ -32,6 +32,11 @@ In `get_recs.py`, we make a GET request to the Tinder endpoint `https://api.goti
 
 Reference: https://github.com/charliewolf/pynder/issues/171
 
+## Process User Information from Tinder
+- In `process_tinder_users.ipynb`, we used `pandas` and `numpy` to removed duplicates from `tinder_users.csv` based on the unique identifier `user_id`.
+- The cleaned dataset is saved to `tinder_users_no_dup.csv`.
+- In the same Jupyter notebook, we extracted a list of unique cities from `tinder_users.csv` and saved it to `cities.csv`. The list of cities will be used in the next step for location-based search of businesses using Yelp API.
+
 ---
-## Get Yelp Reviews using Yelp Public API
+## Get Yelp Reviews Using Yelp Public API
 
