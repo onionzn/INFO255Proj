@@ -65,3 +65,25 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
 - In `process_businesses.ipynb`, we used `pandas` and `numpy` to removed duplicates from `businesses.csv` based on the unique identifier `id`.
 - The cleaned dataset is saved to `businesses_no_dup.csv`.
 - In the same Jupyter notebook, we extracted a list of unique ids from `businesses.csv` and saved it to `business_ids.csv`. The list of ids will be used in the next step for id-based search of yelp reviews.
+
+
+### Step 3: Retrieve Yelp Reviews by Business ID
+- In `get_reviews.py`, we make Get request to the Yelp API endpoint `https://api.yelp.com/v3/businesses/{business_id_or_alias}/reviews` to retrieve reviews by business ID. For each request, we include `sort_by='yelp_sort'` as a parameter and set the `limit` to 50 (which is also the hard limit set by Yelp).
+- Similar to Step 1, we need to include an `API_KEY` in the header for authorization purpose.
+- Each response to the GET request returns multiple reviews, capped at. We then extract the following information from each review JSON object:
+    - `review_id`: The unique identifier of a review
+    - `review_url`: The url to view the review on Yelp
+    - `text`: The content of the review
+    - `time_created`: The time at which the review was created
+    - `user_id`: The unique identifier of the author of a review
+    - `user_profile_url`: The url to view the author's profile on Yelp
+    - `user_image_url`: The url to view the author's profile image
+    - `user_name`: The screen name of the author of a review
+- The extracted information was written into `reviews.csv`. Right now, the `.csv` file contains around 12900 entries.
+- Reference for Yelp reviews API: https://docs.developer.yelp.com/reference/v3_business_reviews
+
+### Step 4: Process Yelp Reviews Dataset
+
+- 
+
+---
