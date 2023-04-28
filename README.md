@@ -34,7 +34,7 @@ In `get_recs.py`, we make a GET request to the Tinder endpoint `https://api.goti
 
 Reference: https://github.com/ChristopherProject/TinderHack2023
 
-## Process User Information from Tinder
+### Process User Information from Tinder
 - In `process_tinder_users.ipynb`, we used `pandas` and `numpy` to removed duplicates from `tinder_users.csv` based on the unique identifier `user_id`.
 - The cleaned dataset is saved to `tinder_users_no_dup.csv`.
 - In the same Jupyter notebook, we extracted a list of unique cities from `tinder_users.csv` and saved it to `cities.csv`. The list of cities will be used in the next step for location-based search of businesses using Yelp API.
@@ -55,5 +55,10 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
     - `state`: The state where a business is located
     - `zip_code`: The zipcode of a business
 - The extracted information was written into `businesses.csv`. Right now, the `.csv` file contains around 4900 entries. There may be duplicates among these entries, but they can be cleaned based on the `id` column.
-- Reference for YELP search API: https://docs.developer.yelp.com/reference/v3_business_search
-- Sample code provided by YELP to make an API call: https://github.com/Yelp/yelp-fusion/blob/master/fusion/python/sample.py
+- Reference for Yelp search API: https://docs.developer.yelp.com/reference/v3_business_search
+- Sample code provided by Yelp to make an API call: https://github.com/Yelp/yelp-fusion/blob/master/fusion/python/sample.py
+
+### Step 2: Process Bussiness Information
+
+- In `process_businesses.ipynb`, we used `pandas` and `numpy` to removed duplicates from `businesses.csv` based on the unique identifier `id`.
+- The cleaned dataset is saved to `businesses_no_dup.csv`.
