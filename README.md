@@ -84,6 +84,8 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
 
 ### Step 4: Process Yelp Reviews Dataset
 
-- 
+- In `process_reviews.ipynb`, we used `pandas` and `numpy` to check for duplicates in `reviews.csv` based on the unique identifier `review_id`. As expected, there are no duplicates.
+- In the same Jupyter notebook, we extracted first names from `user_name` and store it in a new column named `user_first_name`. This new column will be used in the next steps for cross-referencing with the Tinder user dataset.
+- The processed dataset is saved to `reviews_with_first_name.csv`.
 
 ---
