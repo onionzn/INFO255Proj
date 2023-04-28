@@ -6,6 +6,8 @@
 - Ning Zhang
 
 ## Retrieve User Information from Tinder
+
+### Call Tinder API
 In `get_recs.py`, we make a GET request to the Tinder endpoint `https://api.gotinder.com/v2/recs/core` to retrieve a list of users nearby.
 
 - We need to include an `X-Auth-Token` in the header for authorization purpose. The steps to get the `X-Auth-Token` are elaborated in one of the sections below.
@@ -62,3 +64,4 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
 
 - In `process_businesses.ipynb`, we used `pandas` and `numpy` to removed duplicates from `businesses.csv` based on the unique identifier `id`.
 - The cleaned dataset is saved to `businesses_no_dup.csv`.
+- In the same Jupyter notebook, we extracted a list of unique ids from `businesses.csv` and saved it to `business_ids.csv`. The list of ids will be used in the next step for id-based search of yelp reviews.
