@@ -89,3 +89,35 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
 - The processed dataset is saved to `reviews_with_first_name.csv`.
 
 ---
+## Cross-match Tinder and Yelp data
+### Step 1: Cross-match by first name
+
+- In `process_cross_matching.ipynb`, we merged `reviews_with_first_name.csv` and `tinder_users_no_dup.csv` by their first name (column name `user_first_name` and `name`). 
+- Since Tinder data does not have the user's last name, we were not able to check with their initials.
+- Both platforms have the user's emails/phone numbers stored, but from an attacker's point of view, they do not have a public API that lets you retrieve that sensitive information.
+- Worth noting, when we searched for businesses using the city as a search parameter, we implicitly used the location as a reference/quasi identifier, and the Tinder match automatically uses our current location so it’s like adding one dimension for matching accuracy.
+- The merged dataset is saved to `merged.csv`.
+
+### Step 2: Check the similarity between images
+- In `process_image_matching.ipynb`, we tried to match the Yelp image (`first_photo_url`) and Tinder image (`user_image_url`) by two methods: calculating their similarity using `skimage.metrics.structural_similarity` and facial recognition methods.
+- We stored the similarity score in the `image_match_ssim` and `facial_recognition` columns. 0.4 for image_match_ssim score, and 0.x for facial_recognition are reasonable thresholds for fairly similar pictures.
+- However by clicking into some links with relatively high similarity scores, they still might not be the same person. We think it's reasonale people tend to put different pictures on their Tinder than their social media profile picture.
+- The processed dataset is saved into `image_similarity.csv`.
+
+### Step 3: Explore 3rd party authentication
+- We want to explore if the 3rd party authorization, such as using Facebook account to log in to both Yelp and Tinder applications, would help improve the cross-matching between the two platforms.
+- According to our research, the short answer is no (OAuth provides a decent level of privacy)
+    - Most third-party websites (that require you to have an account) understand the reluctance of users to create new accounts. In order to ensure that they do not lose out on such ‘reluctant’ users, these third-party websites implement the OAuth standard in their system.
+    - OAuth is a protocol that allows third-party websites to access and retrieve select pieces of their users’ information in order to authenticate users. 
+    - Most of the time when electing to use social login, the third-party website or app lets us know what information they are requesting access to. They use an access token provided by the authentication provider to gain **restricted/limited** access to some of your account information.
+    - When it comes to the data that Facebook in particular has about each of its users and what it allows third-party apps to have access to, the social media giant has a strict Platform Policy that outlines what developers of third-party apps can and cannot do. With regards to data, third-party apps are required to “provide a publicly available and easily accessible privacy policy that *explains what data you are collecting and how you will use that data*.”
+    - source: https://medium.com/@golman.alan/social-login-3rd-party-app-authorization-f228a3f8ae23
+- Yelp privacy terms for third-party integrations:
+    - Third-Party Integrations: If you sign up for, or log into, Yelp using a third-party service like Facebook or Google, or link your Yelp account to your account with a third-party service like Facebook, Instagram, or Twitter, we may receive information about you from such third party service. If you post content to a third-party service through the Service, that third-party service will also receive that content, which will be visible to anyone that has access to it through that third-party service. Some of our web pages utilize framing techniques to serve content to you from our third-party partners while preserving the look and feel of the Service. In such cases, please note that the information you provide may be transmitted directly to the identified third-party partner. If you interact with businesses through Yelp, they will receive whatever information you choose to share with them, for example, the contact information you share through direct messages to the business or your phone number if you call the business.
+    - source: https://terms.yelp.com/privacy/en_us/20200101_en_us/#third-parties
+    - pretty vague
+- Tinder privacy terms
+    - Information We Collect
+        It goes without saying, we can’t help you develop meaningful connections without some information about you, such as basic profile details and the types of people you’d like to meet. We also collect information about your use of our services such as access logs, as well as information from third parties, like when you access our services through your social media account or when you upload information from your social media account to complete your profile. If you want additional info, we go into more detail below.
+    - source: https://policies.tinder.com/privacy/us/en
+- Neither Yelp nor Tinder stores the user's Facebook or Google account information directly on its platform. They do not have access to the user's password or any other sensitive information associated with their Facebook or Google account. So 3rd party auth does not provide additional information that results in linking / data fusion.
