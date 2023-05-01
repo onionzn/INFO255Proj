@@ -1,7 +1,7 @@
 import requests, json, csv
 
 API_BASE = 'https://api.gotinder.com'
-X_AUTH_TOKEN = "placeholder"
+X_AUTH_TOKEN = "38dbfcb9-93f0-4324-addb-1a4477afc0e8"
 
 LAT_BERK = -122.272743
 LON_BERK = 37.871593
@@ -121,5 +121,5 @@ def main():
 
 
 if __name__ == "__main__":
-    for i in range(10):
-        main()
+    #for i in range(10):
+    main()
