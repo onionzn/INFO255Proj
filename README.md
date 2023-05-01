@@ -99,8 +99,8 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
 - The merged dataset is saved to `merged.csv`.
 
 ### Step 2: Check the similarity between images
-- In `process_image_matching.ipynb`, we tried to match the Yelp image (`first_photo_url`) and Tinder image (`user_image_url`) by two methods: calculating their similarity using `skimage.metrics.structural_similarity` and facial recognition methods.
-- We stored the similarity score in the `image_match_ssim` and `facial_recognition` columns. 
+- In `process_image_matching.ipynb`, we tried to match the Yelp image (`user_image_url`) and Tinder image (`first_photo_url`) by two methods: calculating their similarity using `skimage.metrics.structural_similarity` and facial recognition methods.
+- We stored the similarity score in the `image_match` and `facial_recognition` columns. 
     - image_match_ssim
         - range: [0.0037016618992177, 0.7184725111995259]
         - > 0.7: 3/14888 = 0.0002015045674368619
@@ -111,7 +111,7 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
     - facial_recognition
         - the algorithm failed to detect faces.
         - Probably because most of the photos are group photos, and a lot of them are wearing masks.
-- However by clicking into some links with relatively high similarity scores, they still might not be the same person. We think it's reasonale people tend to put different pictures on their Tinder than their social media profile picture.
+- However by clicking into some links with relatively high similarity scores, they still might not be the same person. We think it's reasonable people tend to put different pictures on their Tinder than their social media profile picture.
 - The processed dataset is saved into `image_similarity.csv`.
 
 ### Step 3: Explore 3rd party authentication
