@@ -131,3 +131,34 @@ Reference: https://github.com/ChristopherProject/TinderHack2023
         It goes without saying, we can’t help you develop meaningful connections without some information about you, such as basic profile details and the types of people you’d like to meet. We also collect information about your use of our services such as access logs, as well as information from third parties, like when you access our services through your social media account or when you upload information from your social media account to complete your profile. If you want additional info, we go into more detail below.
     - source: https://policies.tinder.com/privacy/us/en
 - Neither Yelp nor Tinder stores the user's Facebook or Google account information directly on its platform. They do not have access to the user's password or any other sensitive information associated with their Facebook or Google account. So 3rd party auth does not provide additional information that results in linking / data fusion.
+### Step 4: Analysis
+
+- We wanted to look into l-diversity based on our merged table, which is the table that is a combination of 2 public tables (Tinder users and Yelp profile) to see how secure the table is after combining all the information based on what we know. I am looking at user_name as it is one of the more specific quasi-identifiers that are used and since names are a very helpful clue for connecting social media platforms.
+- Here are some examples of the results of isolating the user_name
+    - `Kevin L.`: 240
+    - `Chris M.`: 221
+    - `Michael U.`: 168
+    - `Patrick B.`: 1
+    - `Shannon Z.`: 1
+    - `Shannon B.`: 1
+    - `Shannon D.`: 1
+    - `Elena C.`: 1
+- As you can see here, there are a lot of Kevins, Chris', Michaels, etc. but there are still a lot of very specific names like Elena C. and Shannon D.. With these, this means that the equivalence classes for names leads to a k-anonymity score of only 1 for the whole table since that is the only number that satisfies all of the equivalence classes.This makes it very easy for anyone to point out who these people are in the dataset and know the urls to their Yelp profile, which can then reveal a lot of information about their lifestyle and the places they frequent.
+- We then looked all of the names (less specific) that only had a value of 1 and found that there were 69 values, which included names like Kegan, Rin, and Cherry.
+- I also looked at different combinations of equivalence classes, and the minimum k was still 1 for many. This means that there are no other people that could mask their identitity, and if someone looks up the name Rin and Kegan, they will be identified and and known within the dataset.
+- So let's say for now that the user_first name is the sensitive attribute even though the url to their Yelp page is what is going to give away the most information. Since those will all be unique values, I wanted to explore the names since there are 69 different unique names we have.
+- For quasi_identifier = {`bd`}
+    - We calculated the l-diversity scores and birth year satisfies 3 Distinct l-diversity and is 1.0779 entropy diverse
+- For quasi_identifier = {`gender`}
+    - We calculated the l-diversity scores and gender satisfies 38 Distinct l-diversity and is 1.2391 entropy diverse
+- For quasi_identifier = {`bd`, `gender`}
+    - We calculated the l-diversity scores and gender birth year satisfies 1 Distinct l-diversity and is 1.0017 entropy diverse
+- For quasi_identifier = {`bd`, `city`}
+    - We calculated the l-diversity scores and gender birth year satisfies 1 Distinct l-diversity and is 1.0012 entropy diverse
+- Seeing the numbers here, having more than 2 quasi-identifiers leads to an l-diversity distinct score of 1, which isn't too great and also a low entropy diverse score. This means that the user_name can be hurtful for those with more unique names as people can more accurately identify them on both Atinder and Yelp and thus lead a potential stalker to inofrmation that can reveal information on lifestyle. Overall, all the entropy scores are also close to 1, which isn't a big number and means that there is less diversity and protection in this manner
+- We also wanted to look at concept of delta-presence and the probabilty of identification. We chose our identities column based on the table that we generated after cross matching the tables and selecting only the rows that met the cut off of 0.40 for the image matching to increase the probability of an accurate match
+- Looking at this, we can see that just looking at the 8 different identities that we were able to successfully match based on multiple factors such as city and facial expression. We can see that if we just take into accoun thte quasi-identifiers that only Levi is the only person that doesn't have the same exact quasi-identifiers as another person. However, this is a small list anyways, but considering this, there are a lot of overlap for the other individuals, which can help mask them more in terms of l-diversity.
+- The number isn't too big though, so adding more quasi-identifiers that reveal more information can still be good for an attacker as they only have to elimate 2 out of 3 entries for the Ryans in Mountain View and 1 out of 2 for the Daniels and Matthews
+- We used the 4 unique equivalence classes and looked for those exact quasi-identifier values in the merged dataframe, and we were unable to locate most of these in our overall merged dataset after combining the Tinder and Yelp data except for the 1 Berkeley entry.
+- Overall, we can see that there is a lot of concern with the name frequency that led to low diversity and k-anonymity. However, we need to consider that we were only able to get a limited number due to Tinder banning us and also our inability to do this on a scale. In this case, there may nre more entries to mask and help increase the diversity, and we are only basing our conclusions and thoughts based on the information we were able to collect.
+- Lastly, we looked into the words with the most frequency of positive words that we personally chose. We were curious about this since Yelp reviews could be more biased towards receiving positive reviews (our hypothesis) since there are privacy concerns that could come from users who do not want to associate themselves with negative reviews or experiences.
